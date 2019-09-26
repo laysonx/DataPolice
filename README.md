@@ -4,7 +4,7 @@
 DataPolice : 轻量级数据权限验证框架
 
 #### 作者
-李鑫_Laysonx (www.laysonx.com)
+李鑫_Laysonx (laysonx.com)
 
 #### 软件架构
 软件架构说明
