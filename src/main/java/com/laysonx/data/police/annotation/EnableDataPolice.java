@@ -16,5 +16,6 @@ import java.lang.annotation.*;
 @Import(DataPoliceRegistrar.class)
 public @interface EnableDataPolice {
 
-
+    /** 扫描 @DataPoliceHelper 所在包 */
+    String[] scanHelperPackages() default {};
 }
