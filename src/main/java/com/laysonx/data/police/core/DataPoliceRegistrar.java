@@ -27,17 +27,17 @@ public class DataPoliceRegistrar implements ImportBeanDefinitionRegistrar, Resou
 
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata
                 .getAnnotationAttributes(EnableDataPolice.class.getName()));
-        String[] namespaces = attributes.getStringArray("scanHelperPackages");
+        String[] scanHelperPackages = attributes.getStringArray("scanHelperPackages");
 
         // TODO 使用手动配置时 不开启校验
-        if (namespaces == null || namespaces.length == 0) {
+        if (scanHelperPackages == null || scanHelperPackages.length == 0) {
             throw new DataVerifyRuleException(SCAN_PACKAGES_NOT_ALLOW_NULL_ERROR);
         }
 
         HelperBeanDefinitionScanner scanner = new HelperBeanDefinitionScanner(registry, false);
         scanner.setResourceLoader(resourceLoader);
         scanner.registerFilters();
-        scanner.doScan(namespaces);
+        scanner.doScan(scanHelperPackages);
 
         BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyEntranceScanner.class.getName(), DataVerifyEntranceScanner.class);
         BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyEntranceConfigurer.class.getName(), DataVerifyEntranceConfigurer.class);

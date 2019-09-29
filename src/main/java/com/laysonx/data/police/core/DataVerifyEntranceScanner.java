@@ -12,6 +12,8 @@ import java.lang.reflect.Method;
 
 /**
  * @description: 入口扫描器
+ * 检查web接口上是否存在@EnableDataVerify
+ * 存在则说明改接口下的数据需要校验，则开启验证
  * @author: Laysonx
  * @date: 2019/9/27 10:32log
  */
@@ -23,8 +25,9 @@ public class DataVerifyEntranceScanner extends HandlerInterceptorAdapter {
 
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            //得到调用方法
+            // 获得当前方法
             Method method = handlerMethod.getMethod();
+            // 检查是否需要开启校验
             EnableDataVerify enableDataVerify = method.getAnnotation(EnableDataVerify.class);
             if (enableDataVerify != null) {
                 log.debug("DataPolice 监控到接口 {} 需要验证数据",method.getName());
