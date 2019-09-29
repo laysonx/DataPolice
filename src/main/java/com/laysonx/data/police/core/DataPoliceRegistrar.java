@@ -9,7 +9,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
- * @description: 组件化
+ * @description: 注册处理器
  * @author: Laysonx
  * @date: 2019/9/27 16:18
  */

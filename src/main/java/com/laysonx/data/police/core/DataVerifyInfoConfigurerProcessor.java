@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @description: 内容扫描器FactoryBean
+ * @description: 装配数据清理、数据验证处理器
  * @author: Laysonx
  * @date: 2019/9/27 15:51
  */

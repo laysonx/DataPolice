@@ -16,6 +16,12 @@ public interface VerifyHandler {
      */
     <T> boolean verify(T t);
 
-
-    Class getTargetClass();
+    /**
+     * @description 验证的数据对象
+     * @author: Laysonx
+     * @date: 2019/9/29 15:35
+     * @param
+     * @return: java.lang.Class
+     */
+    Class<?> getTargetClass();
 }

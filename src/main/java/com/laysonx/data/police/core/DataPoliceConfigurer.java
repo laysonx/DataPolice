@@ -4,10 +4,11 @@ import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
- * @description: 组件化
+ * @description:
  * @author: Laysonx
  * @date: 2019/9/27 16:18
  */
+@Deprecated
 public class DataPoliceConfigurer implements ImportSelector {
 
     @Override

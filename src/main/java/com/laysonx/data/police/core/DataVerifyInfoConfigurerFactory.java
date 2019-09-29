@@ -9,12 +9,13 @@ import org.springframework.beans.factory.FactoryBean;
 import java.util.Map;
 
 /**
- * @description: 内容扫描器FactoryBean
+ * @description: 数据信息配置工厂
  * @author: Laysonx
  * @date: 2019/9/27 15:51
  */
 @Getter
 @Setter
+@Deprecated
 public class DataVerifyInfoConfigurerFactory implements FactoryBean {
 
     private Map<Class<?>, VerifyHandler> verifyHelper;
