@@ -1,6 +1,5 @@
 package com.laysonx.data.police.annotation;
 
-import com.laysonx.data.police.core.DataPoliceConfigurer;
 import com.laysonx.data.police.core.DataPoliceRegistrar;
 import org.springframework.context.annotation.Import;
 
