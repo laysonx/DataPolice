@@ -1,10 +1,11 @@
 package com.laysonx.data.police.core;
 
-import com.laysonx.data.police.annotation.EnableDataPolice;
 import com.laysonx.data.police.util.BeanRegistrationUtil;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.context.ResourceLoaderAware;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
-import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
@@ -12,16 +13,28 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author: Laysonx
  * @date: 2019/9/27 16:18
  */
-public class DataPoliceRegistrar implements ImportBeanDefinitionRegistrar {
+public class DataPoliceRegistrar implements ImportBeanDefinitionRegistrar, ResourceLoaderAware {
+
+    private ResourceLoader resourceLoader;
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
 
-        AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableDataPolice.class.getName()));
-        String[] namespaces = attributes.getStringArray("value");
-        int order = (Integer)attributes.getNumber("order");
+        HelperBeanDefinitionScanner scanner = new HelperBeanDefinitionScanner(registry, false);
+        scanner.setResourceLoader(resourceLoader);
+        scanner.registerFilters();
+        //TODO 扫描所有
+        scanner.doScan("com");
 
-        // 注册扫描器
+        BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyInfoScanner.class.getName(), DataVerifyInfoScanner.class);
+        BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyInfoConfigurer.class.getName(), DataVerifyInfoConfigurer.class);
+        BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyInfoConfigurerProcessor.class.getName(), DataVerifyInfoConfigurerProcessor.class);
+//        BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyInfoConfigurerFactory.class.getName(), DataVerifyInfoConfigurerFactory.class);
 
+    }
+
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
     }
 }

@@ -1,5 +1,8 @@
 package com.laysonx.data.police.core;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date: 2019/9/27 15:51
  */
 @Aspect
+@Getter
+@Setter
 public class DataVerifyInfoConfigurer{
 
     private DataVerifyInfoScanner infoScanner ;
@@ -20,6 +25,7 @@ public class DataVerifyInfoConfigurer{
         this.infoScanner = infoScanner;
     }
 
+    // TODO 可替换参数
     @Pointcut("execution(* com..*.service..*.*(..))")
     public void findData(){}
 

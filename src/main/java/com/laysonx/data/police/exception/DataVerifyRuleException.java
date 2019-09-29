@@ -24,6 +24,8 @@ public class DataVerifyRuleException extends RuntimeException {
      * 4. 优化反射性能
      * 5. 多线程验证集合
      * 6. 自定义异常
+     * 7. 启动时扫描所有 自定义handler 组装 config 用于验证时查找
+     *
      *
 
      * 99. @EnableDataPolice (FactoryBean return 接口拦截器) 开启验证（可配置拦截规则） ；效果：注解开启，bean 开启

@@ -15,4 +15,7 @@ public interface DataHandler {
      * @return: java.lang.Object
      */
     <T> Object getResult(T t);
+
+    Class<?> getTargetClass();
+
 }

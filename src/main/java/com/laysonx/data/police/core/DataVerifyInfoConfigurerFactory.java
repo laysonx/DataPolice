@@ -22,7 +22,7 @@ public class DataVerifyInfoConfigurerFactory implements FactoryBean {
     private Map<Class<?>, DataHandler> dataHelper;
 
     @Override
-    public Object getObject(){
+    public DataVerifyInfoConfigurer getObject(){
 
         // 构建 scanner
         DataVerifyInfoScanner dataVerifyInfoScanner = new DataVerifyInfoScanner();

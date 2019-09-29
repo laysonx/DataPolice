@@ -15,4 +15,7 @@ public interface VerifyHandler {
      * @return: boolean
      */
     <T> boolean verify(T t);
+
+
+    Class getTargetClass();
 }

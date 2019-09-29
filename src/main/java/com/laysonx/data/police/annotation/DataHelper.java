@@ -1,7 +1,6 @@
 package com.laysonx.data.police.annotation;
 
 import com.laysonx.data.police.core.DataPoliceConfigurer;
-import com.laysonx.data.police.core.DataPoliceRegistrar;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -14,8 +13,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Target(ElementType.TYPE)
-@Import(DataPoliceRegistrar.class)
-public @interface EnableDataPolice {
+@Import(DataPoliceConfigurer.class)
+public @interface DataHelper {
 
 
 }
