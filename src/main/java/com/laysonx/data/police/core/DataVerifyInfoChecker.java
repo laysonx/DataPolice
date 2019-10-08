@@ -31,41 +31,38 @@ public class DataVerifyInfoChecker {
     private Map<Class<?>, DataHandler> dataHelper;
 
     public Object around(ProceedingJoinPoint jp) throws Throwable {
-
         Object result = jp.proceed();
-        Object resultObject = result;
-
+        Object waitVerifyData = result;
         if (DataVerifyUtil.shouldVerify()) {
-            if (resultObject != null) {
-
+            if (waitVerifyData != null) {
                 // 获取数据验证注解
                 EnableDataVerify enableDataVerify = DataVerifyUtil.getVerifyTarget();
                 // 获取注解传递的 验证所需的接口类型
                 Class<?>[] value = enableDataVerify.value();
                 String errorMessage = enableDataVerify.errorMessage();
-
                 // 返回数据的结构不同，根据情况处理返回数据
                 if (dataHelper != null && dataHelper.size() > 0) {
-                    for (Class<?> resultClass : dataHelper.keySet()) {
-                        if (resultClass.isInstance(resultObject)) {
-                            DataHandler resultHandler = dataHelper.get(resultClass);
-                            if (resultHandler != null) {
-                                resultObject = resultHandler.getResult(resultObject);
+                    for (Class<?> specialClass : dataHelper.keySet()) {
+                        if (specialClass.isInstance(waitVerifyData)) {
+                            DataHandler dataHandler = dataHelper.get(specialClass);
+                            if (dataHandler != null) {
+                                waitVerifyData = dataHandler.getResult(waitVerifyData);
                             }
                         }
                     }
                 }
 
+                // 检查数据
                 if (value != null && value.length > 0) {
-                    for (Class<?> authClass : value) {
+                    for (Class<?> waitVerifyClass : value) {
                         // 处理集合
-                        if (resultObject instanceof List) {
-                            Collection collection = (Collection) resultObject;
-                            for (Object obj : collection) {
-                                authResultItem(obj, authClass,errorMessage);
+                        if (waitVerifyData instanceof List) {
+                            Collection dataCollection = (Collection) waitVerifyData;
+                            for (Object data : dataCollection) {
+                                this.verifyData(data, waitVerifyClass,errorMessage);
                             }
                         } else {
-                            authResultItem(resultObject, authClass,errorMessage);
+                            this.verifyData(waitVerifyData, waitVerifyClass,errorMessage);
                         }
                     }
                 }
@@ -75,20 +72,19 @@ public class DataVerifyInfoChecker {
     }
 
     /**
-     * 验证数据
-     *
-     * @Author lixin
-     * @Date 2018/3/30
-     * @params
-     * @return:
+     * @description 验证数据
+     * @author: Laysonx
+     * @date: 2019/10/8 15:44
+     * @param waitVerifyData
+     * @param waitVerifyClass
+     * @param errorMassage
+     * @return: void
      */
-    private void authResultItem(Object resultObject, Class<?> authClass,String errorMassage) {
-
-        // 验证
-        if (authClass.isInstance(resultObject)) {
-            VerifyHandler verifyHandler = verifyHelper.get(authClass);
+    private void verifyData(Object waitVerifyData, Class<?> waitVerifyClass,String errorMassage) {
+        if (waitVerifyClass.isInstance(waitVerifyData)) {
+            VerifyHandler verifyHandler = verifyHelper.get(waitVerifyClass);
             if (verifyHandler != null) {
-                if (!verifyHandler.verify(authClass.cast(resultObject))) {
+                if (!verifyHandler.verify(waitVerifyClass.cast(waitVerifyData))) {
                     throw new DataVerifyFailException(errorMassage);
                 }
             }
