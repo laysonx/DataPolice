@@ -2,7 +2,6 @@ package com.laysonx.data.police.core;
 
 import com.laysonx.data.police.annotation.EnableDataVerify;
 import com.laysonx.data.police.exception.DataVerifyFailException;
-import com.laysonx.data.police.exception.DataVerifyRuleException;
 import com.laysonx.data.police.handler.DataHandler;
 import com.laysonx.data.police.handler.VerifyHandler;
 import com.laysonx.data.police.util.DataVerifyUtil;
@@ -43,6 +42,7 @@ public class DataVerifyInfoChecker {
                 EnableDataVerify enableDataVerify = DataVerifyUtil.getVerifyTarget();
                 // 获取注解传递的 验证所需的接口类型
                 Class<?>[] value = enableDataVerify.value();
+                String errorMessage = enableDataVerify.errorMessage();
 
                 // 返回数据的结构不同，根据情况处理返回数据
                 if (dataHelper != null && dataHelper.size() > 0) {
@@ -62,10 +62,10 @@ public class DataVerifyInfoChecker {
                         if (resultObject instanceof List) {
                             Collection collection = (Collection) resultObject;
                             for (Object obj : collection) {
-                                authResultItem(obj, authClass);
+                                authResultItem(obj, authClass,errorMessage);
                             }
                         } else {
-                            authResultItem(resultObject, authClass);
+                            authResultItem(resultObject, authClass,errorMessage);
                         }
                     }
                 }
@@ -82,14 +82,14 @@ public class DataVerifyInfoChecker {
      * @params
      * @return:
      */
-    private void authResultItem(Object resultObject, Class<?> authClass) {
+    private void authResultItem(Object resultObject, Class<?> authClass,String errorMassage) {
 
         // 验证
         if (authClass.isInstance(resultObject)) {
             VerifyHandler verifyHandler = verifyHelper.get(authClass);
             if (verifyHandler != null) {
                 if (!verifyHandler.verify(authClass.cast(resultObject))) {
-                    throw new DataVerifyFailException("无此数据权限");
+                    throw new DataVerifyFailException(errorMassage);
                 }
             }
         }

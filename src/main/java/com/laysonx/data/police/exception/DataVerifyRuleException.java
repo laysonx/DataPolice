@@ -18,10 +18,7 @@ public class DataVerifyRuleException extends RuntimeException {
 
     /**
      * TODO
-     * 1. 启动规则校验
      * 4. 优化反射性能
      * 5. 多线程验证集合
-     * 6. 自定义异常
-     *
      */
 }

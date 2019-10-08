@@ -13,10 +13,11 @@ import java.lang.annotation.*;
 @Documented
 public @interface EnableDataVerify {
 
-    /**
-     * 需要验证数据对象集合
-     */
+    /** 需要验证数据对象集合 */
     Class<?>[] value();
+
+    /** 无权限时 抛出异常提示语 */
+    String errorMessage() default "无此数据权限" ;
 
 
 
