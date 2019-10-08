@@ -39,9 +39,8 @@ public class DataPoliceRegistrar implements ImportBeanDefinitionRegistrar, Resou
         scanner.registerFilters();
         scanner.doScan(scanHelperPackages);
 
-        BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyEntranceScanner.class.getName(), DataVerifyEntranceScanner.class);
         BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyEntranceConfigurer.class.getName(), DataVerifyEntranceConfigurer.class);
-        BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyInfoScanner.class.getName(), DataVerifyInfoScanner.class);
+        BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyInfoChecker.class.getName(), DataVerifyInfoChecker.class);
         BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyInfoConfigurer.class.getName(), DataVerifyInfoConfigurer.class);
         BeanRegistrationUtil.registerBeanDefinitionIfNotExists(registry, DataVerifyInfoConfigurerProcessor.class.getName(), DataVerifyInfoConfigurerProcessor.class);
 

@@ -25,13 +25,13 @@ public class DataVerifyInfoConfigurerFactory implements FactoryBean {
     @Override
     public DataVerifyInfoConfigurer getObject(){
 
-        // 构建 scanner
-        DataVerifyInfoScanner dataVerifyInfoScanner = new DataVerifyInfoScanner();
-        dataVerifyInfoScanner.setVerifyHelper(verifyHelper);
-        dataVerifyInfoScanner.setDataHelper(dataHelper);
+        // 构建 dataVerifyInfoChecker
+        DataVerifyInfoChecker dataVerifyInfoChecker = new DataVerifyInfoChecker();
+        dataVerifyInfoChecker.setVerifyHelper(verifyHelper);
+        dataVerifyInfoChecker.setDataHelper(dataHelper);
 
         // 构建 config
-        return new DataVerifyInfoConfigurer(dataVerifyInfoScanner);
+        return new DataVerifyInfoConfigurer(dataVerifyInfoChecker);
     }
 
     @Override

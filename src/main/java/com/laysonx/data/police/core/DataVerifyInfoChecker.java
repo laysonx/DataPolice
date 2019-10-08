@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @description: 数据扫描器
+ * @description: 数据检查
  * @author: Laysonx
  * @date: 2019/9/27 10:58
  */
 @Getter
 @Setter
 @Slf4j
-public class DataVerifyInfoScanner {
+public class DataVerifyInfoChecker {
 
     /** 存放验证对象 以及其 验证方式 */
     private Map<Class<?>, VerifyHandler> verifyHelper;

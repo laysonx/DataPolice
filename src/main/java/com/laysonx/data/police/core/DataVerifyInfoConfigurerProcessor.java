@@ -8,7 +8,6 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +29,7 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof DataVerifyInfoConfigurer) {
 
-            DataVerifyInfoScanner infoScanner = context.getBean(DataVerifyInfoScanner.class);
+            DataVerifyInfoChecker infoChecker = context.getBean(DataVerifyInfoChecker.class);
             Map<String, VerifyHandler> verifyHandlerMap = context.getBeansOfType(VerifyHandler.class);
             Map<Class<?>, VerifyHandler> verifyHelper = new HashMap<>(verifyHandlerMap.size());
 
@@ -52,9 +51,9 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
                 dataHelper.put(targetClass, handler);
             }
 
-            infoScanner.setVerifyHelper(verifyHelper);
-            infoScanner.setDataHelper(dataHelper);
-            ((DataVerifyInfoConfigurer) bean).setInfoScanner(infoScanner);
+            infoChecker.setVerifyHelper(verifyHelper);
+            infoChecker.setDataHelper(dataHelper);
+            ((DataVerifyInfoConfigurer) bean).setInfoChecker(infoChecker);
 
         }
         return bean;

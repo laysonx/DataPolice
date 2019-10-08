@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
  * @date: 2019/9/27 10:32log
  */
 @Slf4j
+@Deprecated
 public class DataVerifyEntranceScanner extends HandlerInterceptorAdapter {
 
     @Override
