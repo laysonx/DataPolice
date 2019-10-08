@@ -1,5 +1,6 @@
 package com.laysonx.data.police.core;
 
+import com.laysonx.data.police.exception.DataVerifyRuleException;
 import com.laysonx.data.police.handler.DataHandler;
 import com.laysonx.data.police.handler.VerifyHandler;
 import org.springframework.beans.BeansException;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,9 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
 
             for (VerifyHandler handler : verifyHandlerMap.values()) {
                 Class targetClass = handler.getTargetClass();
+                if(verifyHelper.containsKey(targetClass)){
+                    throw new DataVerifyRuleException("VerifyHelper组装异常：存在一个"+targetClass+"对应多个VerifyHandler");
+                }
                 verifyHelper.put(targetClass, handler);
             }
 
@@ -41,6 +46,9 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
             Map<Class<?>, DataHandler> dataHelper = new HashMap<>(dataHandlerMap.size());
             for (DataHandler handler : dataHandlerMap.values()) {
                 Class targetClass = handler.getTargetClass();
+                if(dataHelper.containsKey(targetClass)){
+                    throw new DataVerifyRuleException("DataHelper组装异常：存在一个"+targetClass+"对应多个DataHandler");
+                }
                 dataHelper.put(targetClass, handler);
             }
 
