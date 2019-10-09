@@ -15,8 +15,8 @@ import java.util.Set;
  */
 public class HelperBeanDefinitionScanner extends ClassPathBeanDefinitionScanner {
 
-    public HelperBeanDefinitionScanner(BeanDefinitionRegistry registry, boolean useDefaultFilters) {
-        super(registry, useDefaultFilters);
+    public HelperBeanDefinitionScanner(BeanDefinitionRegistry registry) {
+        super(registry, false);
     }
 
     protected void registerFilters() {

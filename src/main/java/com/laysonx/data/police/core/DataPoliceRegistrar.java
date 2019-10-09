@@ -34,7 +34,7 @@ public class DataPoliceRegistrar implements ImportBeanDefinitionRegistrar, Resou
             throw new DataVerifyRuleException(SCAN_PACKAGES_NOT_ALLOW_NULL_ERROR);
         }
 
-        HelperBeanDefinitionScanner scanner = new HelperBeanDefinitionScanner(registry, false);
+        HelperBeanDefinitionScanner scanner = new HelperBeanDefinitionScanner(registry);
         scanner.setResourceLoader(resourceLoader);
         scanner.registerFilters();
         scanner.doScan(scanHelperPackages);
