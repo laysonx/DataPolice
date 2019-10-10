@@ -23,7 +23,6 @@ public class DataVerifyEntranceConfigurer {
     @Pointcut("@annotation(com.laysonx.data.police.annotation.EnableDataVerify)")
     public void findEntrance(){}
 
-
     @Around("findEntrance()")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
@@ -31,10 +30,7 @@ public class DataVerifyEntranceConfigurer {
         // 检查是否需要开启校验
         EnableDataVerify enableDataVerify = method.getAnnotation(EnableDataVerify.class);
         if (enableDataVerify != null) {
-            log.debug("DataPolice 监控到接口 {} 需要验证数据",method.getName());
             DataVerifyUtil.openVerify(enableDataVerify);
-        } else {
-            log.debug("DataPolice 监控到接口 {} 不需要验证数据",method.getName());
         }
         Object proceed = pjp.proceed();
         DataVerifyUtil.closeVerify();
