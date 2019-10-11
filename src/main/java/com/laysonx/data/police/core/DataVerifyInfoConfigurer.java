@@ -2,6 +2,9 @@ package com.laysonx.data.police.core;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,10 +15,10 @@ import org.aspectj.lang.annotation.Pointcut;
  * @author: Laysonx
  * @date: 2019/9/27 15:51
  */
-@Aspect
 @Getter
 @Setter
-public class DataVerifyInfoConfigurer{
+@ToString
+public class DataVerifyInfoConfigurer implements MethodInterceptor {
 
     private DataVerifyInfoChecker infoChecker ;
 
@@ -23,14 +26,8 @@ public class DataVerifyInfoConfigurer{
         this.infoChecker = infoChecker;
     }
 
-    //TODO 可替换参数
-    @Pointcut("execution(* com..*.service..*.*(..))")
-    public void findData(){}
-
-
-    @Around("findData()")
-    public Object around(ProceedingJoinPoint pjp) throws Throwable {
-        return infoChecker.around(pjp);
+    @Override
+    public Object invoke(MethodInvocation invocation) throws Throwable {
+        return infoChecker.around(invocation);
     }
-
 }

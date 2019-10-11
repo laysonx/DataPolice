@@ -18,4 +18,7 @@ public @interface EnableDataPolice {
 
     /** 扫描 @DataPoliceHelper 所在包 */
     String[] scanHelperPackages() default {};
+
+    /** 配置切点 */
+    String pointcut() default "";
 }

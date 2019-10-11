@@ -3,6 +3,8 @@ package com.laysonx.data.police.core;
 import com.laysonx.data.police.exception.DataVerifyRuleException;
 import com.laysonx.data.police.handler.DataHandler;
 import com.laysonx.data.police.handler.VerifyHandler;
+import org.aopalliance.aop.Advice;
+import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +29,7 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+
         if (bean instanceof DataVerifyInfoConfigurer) {
 
             DataVerifyInfoChecker infoChecker = context.getBean(DataVerifyInfoChecker.class);
@@ -54,6 +57,9 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
             infoChecker.setVerifyHelper(verifyHelper);
             infoChecker.setDataHelper(dataHelper);
             ((DataVerifyInfoConfigurer) bean).setInfoChecker(infoChecker);
+
+            AspectJExpressionPointcutAdvisor advisor = context.getBean(AspectJExpressionPointcutAdvisor.class);
+            advisor.setAdvice((Advice) bean);
 
         }
         return bean;

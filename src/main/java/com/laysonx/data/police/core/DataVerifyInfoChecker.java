@@ -8,6 +8,7 @@ import com.laysonx.data.police.util.DataVerifyUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 import java.util.Collection;
@@ -30,8 +31,8 @@ public class DataVerifyInfoChecker {
     /** 存放验证对象 以及其 清洗方式 */
     private Map<Class<?>, DataHandler> dataHelper;
 
-    public Object around(ProceedingJoinPoint jp) throws Throwable {
-        Object result = jp.proceed();
+    public Object around(MethodInvocation invocation) throws Throwable {
+        Object result = invocation.proceed();
         Object waitVerifyData = result;
         if (DataVerifyUtil.shouldVerify()) {
             if (waitVerifyData != null) {
