@@ -62,7 +62,7 @@ public class DataPoliceRegistrar implements ImportBeanDefinitionRegistrar, Resou
     }
 
     /**
-     * @description 初始化空 advisor
+     * @description 初始化空 advisor 所需参数
      * 装配过程中会替换 advice
      * @author: Laysonx
      * @date: 2019/10/11 13:16
