@@ -24,19 +24,15 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
     private static ApplicationContext context = null;
 
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
         if (bean instanceof DataVerifyInfoConfigurer) {
-
+            /** 从容器中获取 DataVerifyInfoChecker */
             DataVerifyInfoChecker infoChecker = context.getBean(DataVerifyInfoChecker.class);
+            /** 从容器中获取用户自定义的 VerifyHandler 子类 */
             Map<String, VerifyHandler> verifyHandlerMap = context.getBeansOfType(VerifyHandler.class);
+            /** 组装 verifyHelper 用于数据校验 */
             Map<Class<?>, VerifyHandler> verifyHelper = new HashMap<>(verifyHandlerMap.size());
-
             for (VerifyHandler handler : verifyHandlerMap.values()) {
                 Class targetClass = handler.getTargetClass();
                 if(Objects.isNull(targetClass)){
@@ -48,7 +44,9 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
                 verifyHelper.put(targetClass, handler);
             }
 
+            /** 从容器中获取用户自定义的 DataHandler 子类 */
             Map<String, DataHandler> dataHandlerMap = context.getBeansOfType(DataHandler.class);
+            /** 组装 dataHelper 用于数据清洗 */
             Map<Class<?>, DataHandler> dataHelper = new HashMap<>(dataHandlerMap.size());
             for (DataHandler handler : dataHandlerMap.values()) {
                 Class targetClass = handler.getTargetClass();
@@ -61,13 +59,15 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
                 dataHelper.put(targetClass, handler);
             }
 
+            /** 装配用户自定义 Helper 到 DataVerifyInfoChecker */
             infoChecker.setVerifyHelper(verifyHelper);
             infoChecker.setDataHelper(dataHelper);
             ((DataVerifyInfoConfigurer) bean).setInfoChecker(infoChecker);
 
+            /** 获取数据检查切面 */
             AspectJExpressionPointcutAdvisor advisor = context.getBean(AspectJExpressionPointcutAdvisor.class);
+            /** 替换 advice */
             advisor.setAdvice((Advice) bean);
-
         }
         return bean;
     }
