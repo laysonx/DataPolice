@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @description: 装配数据清理、数据验证处理器
@@ -38,6 +39,9 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
 
             for (VerifyHandler handler : verifyHandlerMap.values()) {
                 Class targetClass = handler.getTargetClass();
+                if(Objects.isNull(targetClass)){
+                    throw new DataVerifyRuleException(handler.getClass().getName()+"实现getTargetClass()方法返回值无意义：return null");
+                }
                 if(verifyHelper.containsKey(targetClass)){
                     throw new DataVerifyRuleException("VerifyHelper组装异常：存在一个"+targetClass+"对应多个VerifyHandler");
                 }
@@ -48,6 +52,9 @@ public class DataVerifyInfoConfigurerProcessor implements BeanPostProcessor, App
             Map<Class<?>, DataHandler> dataHelper = new HashMap<>(dataHandlerMap.size());
             for (DataHandler handler : dataHandlerMap.values()) {
                 Class targetClass = handler.getTargetClass();
+                if(Objects.isNull(targetClass)){
+                    throw new DataVerifyRuleException(handler.getClass().getName()+"实现getTargetClass()方法返回值无意义：return null");
+                }
                 if(dataHelper.containsKey(targetClass)){
                     throw new DataVerifyRuleException("DataHelper组装异常：存在一个"+targetClass+"对应多个DataHandler");
                 }

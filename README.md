@@ -5,7 +5,7 @@ DataPolice : 基于Spring的轻量级数据权限验证框架，version1.0.0版�
 
 
 #### 作者
-李鑫_Laysonx (laysonx.com)
+李鑫_Laysonx (www.laysonx.com)
 
 #### 使用说明
 框架使用Demo 参考：https://gitee.com/layson/DataPoliceDemo
