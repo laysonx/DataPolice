@@ -1,7 +1,8 @@
 # DataPolice
 
 #### 介绍
-DataPolice : 基于Spring的轻量级数据权限验证框架，version1.0.0版本优先支持SpringBoot项目
+DataPolice : 基于Spring的轻量级数据权限验证框架，version1.0.0版本优先支持SpringBoot项目。无侵入、高复用，只需3个注解，数据权限验证轻松搞定！
+
 
 #### 作者
 李鑫_Laysonx (laysonx.com)
